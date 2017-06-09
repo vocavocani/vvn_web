@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import App from './components/App.jsx';
-import './index.scss';
 
 ReactDOM.render(
   <AppContainer>
