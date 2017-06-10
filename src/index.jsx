@@ -10,5 +10,5 @@ ReactDOM.render(
   , document.getElementById('main'));
 
 if (module.hot) {
-  module.hot.accept('./components/App.jsx', renderApp);
+  module.hot.accept('./components/App.jsx', AppContainer);
 }
