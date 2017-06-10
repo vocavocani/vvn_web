@@ -1,7 +1,18 @@
 import React, { Component } from 'react';
-import api from '../../actions/Api'
+import api from '../../actions/Api';
 
-class Home extends React.Component {
+class Login extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this._auth();
+  }
+
+  _auth() {
+    if (localStorage.getItem('vvn_token')) {
+      return this.props.history.push('/');
+    }
+  }
 
   login(e) {
     e.preventDefault()
@@ -13,7 +24,8 @@ class Home extends React.Component {
 
     api.post('/api/user/login', login_data, false)
       .then((data) => {
-        console.log(data);
+        localStorage.setItem('vvn_token', data.token);
+        this.props.history.push('/');
       })
       .catch((error) => {
         alert(error.message);
@@ -32,4 +44,4 @@ class Home extends React.Component {
     );
   }
 }
-export default Home;
+export default Login;
