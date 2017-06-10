@@ -85,7 +85,7 @@ class Register extends React.Component {
                 <div className="btn-group">
                   <Button raised primary className="btn" type="submit">회원가입</Button>
                   <Button raised className="btn"
-                    onClick={() => { this.props.history.push('register'); }}>
+                    onClick={() => { this.props.history.push('/login'); }}>
                     로그인 화면
                   </Button>
                 </div>

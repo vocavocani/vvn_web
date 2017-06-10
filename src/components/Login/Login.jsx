@@ -68,7 +68,7 @@ class Login extends React.Component {
                 <div className="btn-group">
                   <Button raised primary className="btn" type="submit">로그인</Button>
                   <Button raised className="btn"
-                    onClick={() => { this.props.history.push('register'); }}>
+                    onClick={() => { this.props.history.push('/register'); }}>
                     회원가입
                   </Button>
                 </div>
