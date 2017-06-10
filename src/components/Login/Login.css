@@ -1,0 +1,19 @@
+.container {
+  text-align: center;
+  margin-top: 100px;
+}
+.title {
+  padding-top: 50px;
+}
+.form-group {
+  text-align: center;
+  padding-left: 50px;
+  padding-right: 50px;
+}
+.btn-group {
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+.btn {
+  margin: 10px;
+}

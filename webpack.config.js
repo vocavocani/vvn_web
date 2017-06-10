@@ -64,7 +64,7 @@ module.exports = (env = defaultEnv) => ({
           [
             'style-loader',
             'css-loader',
-            'sass-loader',
+            // 'sass-loader',
           ]
           : ExtractTextPlugin.extract({
             fallback: 'style-loader',

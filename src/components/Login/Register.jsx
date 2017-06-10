@@ -5,7 +5,7 @@ import api from '../../actions/Api';
 
 import './Login.css';
 
-class Login extends React.Component {
+class Register extends React.Component {
   constructor(props) {
     super(props);
 
@@ -21,15 +21,17 @@ class Login extends React.Component {
   login(e) {
     e.preventDefault()
 
-    const login_data = {
+    const register_data = {
       id: e.target.id.value,
-      pw: e.target.pw.value
+      nickname: e.target.nickname.value,
+      pw_1: e.target.pw_1.value,
+      pw_2: e.target.pw_2.value
     }
 
-    api.post('/api/user/login', login_data, false)
+    api.post('/api/user/register', register_data, false)
       .then((data) => {
-        localStorage.setItem('vvn_token', data.token);
-        this.props.history.push('/');
+        console.log(data);
+        this.props.history.push('/login');
       })
       .catch((error) => {
         alert(error.message);
@@ -59,17 +61,32 @@ class Login extends React.Component {
                 /><br />
                 <TextField
                   required
-                  id="pw"
-                  name="pw"
+                  id="nickname"
+                  name="nickname"
+                  label="Nickname"
+                  className="input"
+                /><br />
+                <TextField
+                  required
+                  id="pw_1"
+                  name="pw_1"
+                  type="password"
+                  label="Password"
+                  className="input"
+                /><br />
+                <TextField
+                  required
+                  id="pw_2"
+                  name="pw_2"
                   type="password"
                   label="Password"
                   className="input"
                 /><br />
                 <div className="btn-group">
-                  <Button raised primary className="btn" type="submit">로그인</Button>
+                  <Button raised primary className="btn" type="submit">회원가입</Button>
                   <Button raised className="btn"
                     onClick={() => { this.props.history.push('register'); }}>
-                    회원가입
+                    로그인 화면
                   </Button>
                 </div>
               </form>
@@ -80,4 +97,4 @@ class Login extends React.Component {
     );
   }
 }
-export default Login;
+export default Register;
