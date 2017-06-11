@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import api from '../../actions/Api';
 
+import TopBar from '../TopBar/TopBar.jsx'
+
 class Home extends React.Component {
   constructor(props) {
     super(props);
@@ -21,6 +23,7 @@ class Home extends React.Component {
   render() {
     return (
       <div>
+        <TopBar history={this.props.history} />
         <h1>VocaVocaNi Home</h1>
       </div>
     );
