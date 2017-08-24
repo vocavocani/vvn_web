@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+
 import { TextField, Grid, Paper } from 'material-ui';
 import styled from 'styled-components';
+
+import TopBar from '../TopBar/TopBar.jsx';
 import api from '../../actions/Api';
 
 /**
@@ -48,42 +51,15 @@ const textFieldStyle = {
   margin: '20px 0 0 0',
 };
 
-class Register extends Component {
+class CreateGroup extends Component {
   constructor(props) {
     super(props);
-
-    this._auth();
-  }
-
-  _auth() {
-    if (localStorage.getItem('token')) {
-      return this.props.history.push('/');
-    }
-  }
-
-  login(e) {
-    e.preventDefault();
-
-    const register_data = {
-      id: e.target.id.value,
-      nickname: e.target.nickname.value,
-      pw_1: e.target.pw_1.value,
-      pw_2: e.target.pw_2.value
-    };
-
-    api.post('/api/users/register', register_data, false)
-      .then((data) => {
-        console.log(data);
-        this.props.history.push('/login');
-      })
-      .catch((error) => {
-        alert(error.message);
-      })
   }
 
   render() {
     return (
-      <Container>
+      <div>
+        <TopBar history={this.props.history}/>
         <Grid
           container
           align="center"
@@ -93,7 +69,7 @@ class Register extends Component {
           <Grid item xs={10} sm={4}>
             <Paper>
               <h1>VocaVocaNi</h1>
-              <form onSubmit={this.login.bind(this)}>
+              <form>
                 <TextField
                   required
                   id="id"
@@ -125,19 +101,15 @@ class Register extends Component {
                   style={textFieldStyle}
                 /><br />
                 <ButtonGroup>
-                  <Button type="submit" bgColor={'RoyalBlue'}>회원가입</Button>
-                  <Button type="button" bgColor={'grey'}
-                    onClick={() => { this.props.history.push('/login'); }}>
-                    로그인 화면
-                  </Button>
+                  <Button type="submit" bgColor={'RoyalBlue'}>생성</Button>
                 </ButtonGroup>
               </form>
             </Paper>
           </Grid>
         </Grid>
-      </Container>
+      </div>
     );
   }
 }
 
-export default Register;
+export default CreateGroup;

@@ -26,11 +26,13 @@ const styles = {
 };
 
 const CreateGroupBox = (props) => {
+  console.log('props', props);
   const classes = props.classes;
 
   return (
     <Grid item xs={12} sm={6} md={3}>
-      <Card className={classes.card}>
+      <Card className={classes.card}
+            onClick={() => { props.history.push('/teams/create'); }}>
         <CardMedia
           image="https://www.materialui.co/materialIcons/content/add_circle_grey_192x192.png"
           className={classes.media}

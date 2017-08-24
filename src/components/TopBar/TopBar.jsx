@@ -21,7 +21,10 @@ const styles = {
   },
   flex: {
     flex: 1,
-    color: 'white'
+    color: 'white',
+    '&:hover': {
+      cursor: 'pointer'
+    }
   },
   whiteColor: {
     color: 'white'
@@ -36,12 +39,20 @@ const TopBar = (props) => {
     props.history.push('/login');
   };
 
+  const goHome = () => {
+    props.history.push('/');
+  };
+
   return (
     <div className={classes.root}>
       <AppBar position="static">
         <InnerContents>
         <Toolbar>
-          <Typography type="title" className={classes.flex}>VocaVocaNi</Typography>
+          <Typography type="title"
+                      onClick={goHome}
+                      className={classes.flex}>
+            VocaVocaNi
+          </Typography>
           <Button onClick={logout}
                   className={classes.whiteColor}
           >Logout</Button>
