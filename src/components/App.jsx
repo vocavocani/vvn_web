@@ -1,22 +1,34 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { injectGlobal } from 'styled-components';
 
+import createMuiTheme from 'material-ui/styles/theme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import Home from './Home/Home.jsx';
-import Login from './Login/Login.jsx';
+import EmailLogin from './Login/EmailLogin.jsx';
 import Register from './Login/Register.jsx';
 
-import './App.css';
+/**
+ * Styled Components
+ */
+injectGlobal`
+  body {
+    margin: 0;
+    background-color: #f2f4f7;
+  }
+`;
+
+const theme = createMuiTheme();
 
 const App = () => {
   return (
-    <MuiThemeProvider>
+    <MuiThemeProvider theme={theme}>
       <BrowserRouter>
         <div>
           <Switch>
             <Route exact path='/' component={Home} />
-            <Route path='/login' component={Login} />
+            <Route path='/login' component={EmailLogin} />
             <Route path='/register' component={Register} />
           </Switch>
         </div>

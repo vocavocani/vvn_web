@@ -1,11 +1,54 @@
 import React, { Component } from 'react';
-import { TextField, Button, Grid, Paper } from 'material-ui';
-
+import { TextField, Grid, Paper } from 'material-ui';
+import styled from 'styled-components';
 import api from '../../actions/Api';
 
-import './Login.css';
+/**
+ * Styled Components
+ */
+const Container = styled.div`
+  text-align: center;
+  
+  h1 {
+    padding-top: 50px;
+  }
+  
+  @media (min-width: 1024px){
+    margin-top: 100px;
+  }
+`;
 
-class Register extends React.Component {
+const ButtonGroup = styled.div`
+  padding-top: 50px;
+  padding-bottom: 20px;
+`;
+
+const Button = styled.button`
+  width: 90%;
+  height: 40px;
+  margin: 10px;
+	font-size: 1em;
+	border-radius: 3px;
+
+	color: white;
+	border: 2px solid ${props => props.bgColor};
+	background-color: ${props => props.bgColor};
+	
+	&:hover {
+		cursor: pointer;
+		opacity: 0.5;
+	}
+`;
+
+/**
+ * Material-ui override
+ */
+const textFieldStyle = {
+  width: '80%',
+  margin: '20px 0 0 0',
+};
+
+class Register extends Component {
   constructor(props) {
     super(props);
 
@@ -13,22 +56,22 @@ class Register extends React.Component {
   }
 
   _auth() {
-    if (localStorage.getItem('vvn_token')) {
+    if (localStorage.getItem('token')) {
       return this.props.history.push('/');
     }
   }
 
   login(e) {
-    e.preventDefault()
+    e.preventDefault();
 
     const register_data = {
       id: e.target.id.value,
       nickname: e.target.nickname.value,
       pw_1: e.target.pw_1.value,
       pw_2: e.target.pw_2.value
-    }
+    };
 
-    api.post('/api/user/register', register_data, false)
+    api.post('/api/users/register', register_data, false)
       .then((data) => {
         console.log(data);
         this.props.history.push('/login');
@@ -40,31 +83,30 @@ class Register extends React.Component {
 
   render() {
     return (
-      <div className="container">
+      <Container>
         <Grid
           container
-          gutter={24}
           align="center"
           direction="row"
           justify="center"
         >
-          <Grid item xs={8} sm={6}>
+          <Grid item xs={10} sm={4}>
             <Paper>
-              <h1 className="title">VocaVocaNi</h1>
-              <form onSubmit={this.login.bind(this)} className="form-group">
+              <h1>VocaVocaNi</h1>
+              <form onSubmit={this.login.bind(this)}>
                 <TextField
                   required
                   id="id"
                   name="id"
                   label="ID"
-                  className="input"
+                  style={textFieldStyle}
                 /><br />
                 <TextField
                   required
                   id="nickname"
                   name="nickname"
                   label="Nickname"
-                  className="input"
+                  style={textFieldStyle}
                 /><br />
                 <TextField
                   required
@@ -72,7 +114,7 @@ class Register extends React.Component {
                   name="pw_1"
                   type="password"
                   label="Password"
-                  className="input"
+                  style={textFieldStyle}
                 /><br />
                 <TextField
                   required
@@ -80,20 +122,20 @@ class Register extends React.Component {
                   name="pw_2"
                   type="password"
                   label="Password"
-                  className="input"
+                  style={textFieldStyle}
                 /><br />
-                <div className="btn-group">
-                  <Button raised primary className="btn" type="submit">회원가입</Button>
-                  <Button raised className="btn"
+                <ButtonGroup>
+                  <Button type="submit" bgColor={'RoyalBlue'}>회원가입</Button>
+                  <Button type="button" bgColor={'grey'}
                     onClick={() => { this.props.history.push('/login'); }}>
                     로그인 화면
                   </Button>
-                </div>
+                </ButtonGroup>
               </form>
             </Paper>
           </Grid>
         </Grid>
-      </div>
+      </Container>
     );
   }
 }
