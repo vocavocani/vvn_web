@@ -2,7 +2,7 @@ import superagent from 'superagent';
 
 class API {
   constructor() {
-    this.base_url = 'http://localhost:3000';
+    this.base_url = 'http://52.78.25.56:3000';
   }
 
   get(url, is_auth) {
@@ -10,13 +10,14 @@ class API {
       const request = superagent.get(`${this.base_url}${url}`);
 
       if (is_auth) {
-        request.set('token', localStorage.getItem('vvn_token'));
+        request.set('token', localStorage.getItem('token'));
       }
 
       request.end((err, res) => {
         if (err) {
+          console.log(res);
           if (res.status === 401) {
-            localStorage.removeItem('vvn_token');
+            localStorage.removeItem('token');
             return location.href = '/login';
           }
           console.log('ERROR Response:', res.body);
@@ -33,7 +34,7 @@ class API {
       const request = superagent.post(`${this.base_url}${url}`);
 
       if (is_auth) {
-        request.set('token', localStorage.getItem('vvn_token'));
+        request.set('token', localStorage.getItem('token'));
       }
 
       if (data) {
@@ -43,7 +44,7 @@ class API {
       request.end((err, res) => {
         if (err) {
           if (res.status === 401) {
-            localStorage.removeItem('vvn_token');
+            localStorage.removeItem('token');
             return location.href = '/login';
           }
           console.log('ERROR Response:', res.body);

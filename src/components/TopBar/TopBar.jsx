@@ -1,24 +1,55 @@
 import React from 'react';
-import { AppBar, Toolbar, Typography, Button } from 'material-ui';
+import {withStyles} from 'material-ui/styles';
+import {AppBar, Toolbar, Typography, Button} from 'material-ui';
+import styled from 'styled-components';
 
-import './TopBar.css'
+/**
+ * Styled Components
+ */
+const InnerContents = styled.div`
+  padding-left: 10%;
+  padding-right: 10%;
+  color: white;
+`;
 
-const TopBar = ({history}) => {
-  const logout = () => {
-    localStorage.removeItem('vvn_token');
-    history.push('/login');
+/**
+ * Material-ui override
+ */
+const styles = {
+  root: {
+    width: '100%',
+  },
+  flex: {
+    flex: 1,
+    color: 'white'
+  },
+  whiteColor: {
+    color: 'white'
   }
+};
+
+const TopBar = (props) => {
+  const classes = props.classes;
+
+  const logout = () => {
+    localStorage.removeItem('token');
+    props.history.push('/login');
+  };
 
   return (
-    <div>
-      <AppBar>
+    <div className={classes.root}>
+      <AppBar position="static">
+        <InnerContents>
         <Toolbar>
-          <Typography type="title" colorInherit className='top-bar-title'>VocaVocaNi</Typography>
-          <Button contrast onClick={logout}>Logout</Button>
+          <Typography type="title" className={classes.flex}>VocaVocaNi</Typography>
+          <Button onClick={logout}
+                  className={classes.whiteColor}
+          >Logout</Button>
         </Toolbar>
+        </InnerContents>
       </AppBar>
     </div>
   );
 };
 
-export default TopBar;
+export default withStyles(styles)(TopBar);

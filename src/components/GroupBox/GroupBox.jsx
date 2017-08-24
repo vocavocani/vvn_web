@@ -1,15 +1,39 @@
 import React from 'react';
-import { Grid, Typography, Card, CardActions, CardHeader, CardContent, CardMedia } from 'material-ui';
+import {withStyles} from 'material-ui/styles';
+import Card, {CardContent, CardMedia} from 'material-ui/Card';
+import Typography from 'material-ui/Typography';
+import Grid from 'material-ui/Grid';
 
-import './GroupBox.css';
+/**
+ * Material-ui override
+ */
+const styles = {
+  card: {
+    minWidth: 150,
+    minHeight: 150,
+    maxHeight: 250,
+    '&:hover': {
+      cursor: 'pointer',
+      opacity: 0.7,
+    },
+  },
+  media: {
+    backgroundSize: '100%',
+    height: 150,
+    maxHeight: 150,
+  },
+};
 
 const GroupBox = (props) => {
+  const classes = props.classes;
+
   return (
-    <Grid item xs={12} sm={3} className='group-box'>
-      <Card>
-        <CardMedia>
-          <img src='https://avatars0.githubusercontent.com/u/10248850' className='main-image' />
-        </CardMedia>
+    <Grid item xs={12} sm={6} md={3}>
+      <Card className={classes.card}>
+        <CardMedia
+          className={classes.media}
+          image="https://avatars0.githubusercontent.com/u/10248850"
+        />
         <CardContent>
           <Typography type="headline" component="h2">
             {props.group.team_name}
@@ -23,4 +47,4 @@ const GroupBox = (props) => {
   );
 };
 
-export default GroupBox;
+export default withStyles(styles)(GroupBox);
