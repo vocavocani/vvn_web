@@ -26,7 +26,6 @@ const styles = {
 };
 
 const CreateGroupBox = (props) => {
-  console.log('props', props);
   const classes = props.classes;
 
   return (

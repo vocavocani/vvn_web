@@ -49,7 +49,7 @@ class Home extends Component {
             direction="row"
             align="flex-start"
             justify="flex-start"
-            spacing="40"
+            spacing={40}
           >
             {this.state.groups.map((group, i) => {
               return (

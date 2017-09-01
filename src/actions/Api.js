@@ -20,8 +20,8 @@ class API {
             localStorage.removeItem('token');
             return location.href = '/login';
           }
-          console.log('ERROR Response:', res.body);
-          reject(res.body[0]);
+          console.error('ERROR Response:', res.body);
+          reject(res.body);
         } else {
           reslove(res.body);
         }
@@ -47,7 +47,7 @@ class API {
             localStorage.removeItem('token');
             return location.href = '/login';
           }
-          console.log('ERROR Response:', res.body);
+          console.error('ERROR Response:', res.body);
           reject(res.body[0]);
         } else {
           reslove(res.body);
