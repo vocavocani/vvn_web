@@ -6,7 +6,7 @@ class API {
   }
 
   get(url, is_auth) {
-    return new Promise((reslove, reject) => {
+    return new Promise((resolve, reject) => {
       const request = superagent.get(`${this.base_url}${url}`);
 
       if (is_auth) {
@@ -23,14 +23,14 @@ class API {
           console.error('ERROR Response:', res.body);
           reject(res.body);
         } else {
-          reslove(res.body);
+          resolve(res.body);
         }
       });
     });
   }
 
   post(url, data, is_auth) {
-    return new Promise((reslove, reject) => {
+    return new Promise((resolve, reject) => {
       const request = superagent.post(`${this.base_url}${url}`);
 
       if (is_auth) {
@@ -50,7 +50,7 @@ class API {
           console.error('ERROR Response:', res.body);
           reject(res.body[0]);
         } else {
-          reslove(res.body);
+          resolve(res.body);
         }
       });
     });
