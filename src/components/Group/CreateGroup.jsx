@@ -115,15 +115,18 @@ class CreateGroup extends Component {
 
     if (char_code === 13 || char_code === 32) {
       e.preventDefault();
+
+      const value = e.target.value;
       const tags = [...this.state.tags];
       if (tags.length >= 3) {
         alert('태그는 최대 3개 까지 입니다.');
         return;
       }
-      if (e.target.value === '') {
+      if (value === '' || tags.indexOf(value) !== -1) {
         return;
       }
 
+      tags.push(value);
       this.setState({ tags });
       e.target.value = '';
     }
