@@ -120,7 +120,10 @@ class CreateGroup extends Component {
         alert('태그는 최대 3개 까지 입니다.');
         return;
       }
-      tags.push(e.target.value);
+      if (e.target.value === '') {
+        return;
+      }
+
       this.setState({ tags });
       e.target.value = '';
     }
