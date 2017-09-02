@@ -80,7 +80,7 @@ class CreateGroup extends Component {
     this.state = {
       tags: [],
       is_public: true,
-      file: '',
+      image: '',
       image_preview_url: ''
     };
   }
@@ -91,23 +91,23 @@ class CreateGroup extends Component {
 
   handleImageChange(e) {
     let reader = new FileReader();
-    let file = e.target.files[0];
+    let image = e.target.files[0];
 
     reader.onloadend = () => {
       this.setState({
-        file: file,
+        image: image,
         image_preview_url: reader.result
       });
     };
 
-    reader.readAsDataURL(file)
+    reader.readAsDataURL(image)
   }
 
   handleRequestDelete(data) {
     const tags = [...this.state.tags];
     const deleteTag = tags.indexOf(data);
     tags.splice(deleteTag, 1);
-    this.setState({ tags });
+    this.setState({tags});
   };
 
   insertTag(e) {
@@ -127,19 +127,43 @@ class CreateGroup extends Component {
       }
 
       tags.push(value);
-      this.setState({ tags });
+      this.setState({tags});
       e.target.value = '';
     }
+  }
+
+  createGroup(e) {
+    e.preventDefault();
+
+    const group_data = {
+      name: e.target.name.value,
+      max_cap: e.target.max_cap.value,
+      rule: e.target.rule.value,
+      tag: this.state.tags,
+      is_public: this.state.is_public,
+      image: this.state.image
+    };
+
+    api.post('/api/teams', group_data, true)
+      .then((data) => {
+        console.log(data);
+        this.props.history.push('/');
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
   }
 
   render() {
     let {image_preview_url} = this.state;
     let image_preview = null;
     if (image_preview_url) {
-      image_preview = (<img src={image_preview_url} />);
+      image_preview = (<img src={image_preview_url}/>);
     } else {
       image_preview = (<div className="previewText">대표 사진을 업로드 해주세요.</div>);
     }
+
+    console.log(this.state.image);
     return (
       <div>
         <TopBar history={this.props.history}/>
@@ -156,15 +180,15 @@ class CreateGroup extends Component {
                 <div>
                   {image_preview}
                 </div>
-                <form>
+                <form onSubmit={this.createGroup.bind(this)}>
                   <input accept="jpg,jpeg,JPG,JPEG"
-                         id="file"
+                         id="image"
                          type="file"
                          onChange={this.handleImageChange.bind(this)}
                          style={hiddenInput}
                   />
                   <div>
-                    <label htmlFor="file">
+                    <label htmlFor="image">
                       <Button raised component="span">
                         모임 사진 추가
                       </Button>

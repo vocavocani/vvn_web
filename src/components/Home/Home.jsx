@@ -39,7 +39,6 @@ class Home extends Component {
   }
 
   render() {
-    // console.log(this.state.groups);
     return (
       <div>
         <TopBar history={this.props.history}/>

@@ -38,7 +38,7 @@ class API {
       }
 
       if (data) {
-        request.send(data)
+        request.send(data);
       }
 
       request.end((err, res) => {

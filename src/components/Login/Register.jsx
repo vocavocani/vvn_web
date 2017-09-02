@@ -77,7 +77,7 @@ class Register extends Component {
       })
       .catch((error) => {
         alert(error.message);
-      })
+      });
   }
 
   render() {
