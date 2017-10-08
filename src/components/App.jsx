@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { injectGlobal } from 'styled-components';
 
-import createMuiTheme from 'material-ui/styles/theme';
+import { createMuiTheme } from 'material-ui/styles';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import Home from './Home/Home.jsx';

@@ -144,6 +144,8 @@ class CreateGroup extends Component {
       image: this.state.image
     };
 
+    console.log('group_data:', group_data);
+
     api.post('/api/teams', group_data, true)
       .then((data) => {
         console.log(data);
@@ -207,7 +209,7 @@ class CreateGroup extends Component {
                     id="max_cap"
                     name="max_cap"
                     label="최대 인원"
-                    value={2}
+                    defaultValue="2"
                     helperText="최대 인윈 범위: 2 ~ 8"
                     style={textFieldStyle}
                   />
