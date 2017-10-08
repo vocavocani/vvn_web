@@ -165,100 +165,96 @@ class CreateGroup extends Component {
       image_preview = (<div className="previewText">대표 사진을 업로드 해주세요.</div>);
     }
 
-    console.log(this.state.image);
-    return (
-      <div>
-        <TopBar history={this.props.history}/>
-        <InnerContents>
-          <Grid
-            container
-            align="center"
-            direction="row"
-            justify="center"
-          >
-            <Grid item sm={12} md={6}>
-              <Paper>
-                <h1>모임 만들기</h1>
+    return [
+      <TopBar key="TopBar" history={this.props.history}/>,
+      <InnerContents key="InnerContents">
+        <Grid
+          container
+          align="center"
+          direction="row"
+          justify="center"
+        >
+          <Grid item sm={12} md={6}>
+            <Paper>
+              <h1>모임 만들기</h1>
+              <div>
+                {image_preview}
+              </div>
+              <form onSubmit={this.createGroup.bind(this)}>
+                <input accept="jpg,jpeg,JPG,JPEG"
+                       id="image"
+                       type="file"
+                       onChange={this.handleImageChange.bind(this)}
+                       style={hiddenInput}
+                />
                 <div>
-                  {image_preview}
+                  <label htmlFor="image">
+                    <Button raised component="span">
+                      모임 사진 추가
+                    </Button>
+                  </label>
                 </div>
-                <form onSubmit={this.createGroup.bind(this)}>
-                  <input accept="jpg,jpeg,JPG,JPEG"
-                         id="image"
-                         type="file"
-                         onChange={this.handleImageChange.bind(this)}
-                         style={hiddenInput}
+                <TextField
+                  required
+                  id="name"
+                  name="name"
+                  label="모임 이름"
+                  style={textFieldStyle}
+                />
+                <TextField
+                  required
+                  type="number"
+                  id="max_cap"
+                  name="max_cap"
+                  label="최대 인원"
+                  defaultValue="2"
+                  helperText="최대 인윈 범위: 2 ~ 8"
+                  style={textFieldStyle}
+                />
+                <TextField
+                  id="tag_input"
+                  name="tag_input"
+                  label="태그 입력"
+                  helperText="최대 3개 까지 가능"
+                  onKeyPress={this.insertTag.bind(this)}
+                  style={textFieldStyle}
+                />
+                <TagsWrapper>
+                  {this.state.tags.map((tag, index) => {
+                    return (
+                      <Chip
+                        label={tag}
+                        key={index}
+                        onRequestDelete={this.handleRequestDelete.bind(this, tag)}
+                        style={tagItem}
+                      />
+                    );
+                  })}
+                </TagsWrapper>
+                <TextField
+                  multiline
+                  id="rule"
+                  name="rule"
+                  label="모임 규칙 및 소개"
+                  rows="3"
+                  style={textFieldStyle}
+                />
+                <LeftAlignContents>
+                  모임 공개 여부
+                  <Switch
+                    checked={this.state.is_public}
+                    onChange={this.handleChange.bind(this)}
                   />
-                  <div>
-                    <label htmlFor="image">
-                      <Button raised component="span">
-                        모임 사진 추가
-                      </Button>
-                    </label>
-                  </div>
-                  <TextField
-                    required
-                    id="name"
-                    name="name"
-                    label="모임 이름"
-                    style={textFieldStyle}
-                  />
-                  <TextField
-                    required
-                    type="number"
-                    id="max_cap"
-                    name="max_cap"
-                    label="최대 인원"
-                    defaultValue="2"
-                    helperText="최대 인윈 범위: 2 ~ 8"
-                    style={textFieldStyle}
-                  />
-                  <TextField
-                    required
-                    id="tag_input"
-                    name="tag_input"
-                    label="태그 입력"
-                    helperText="최대 3개 까지 가능"
-                    onKeyPress={this.insertTag.bind(this)}
-                    style={textFieldStyle}
-                  />
-                  <TagsWrapper>
-                    {this.state.tags.map((tag, index) => {
-                      return (
-                        <Chip
-                          label={tag}
-                          key={index}
-                          onRequestDelete={this.handleRequestDelete.bind(this, tag)}
-                          style={tagItem}
-                        />
-                      );
-                    })}
-                  </TagsWrapper>
-                  <TextField
-                    multiline
-                    id="rule"
-                    name="rule"
-                    label="모임 규칙 및 소개"
-                    rows="3"
-                    style={textFieldStyle}
-                  />
-                  <LeftAlignContents>
-                    모임 공개 여부
-                    <Switch
-                      checked={this.state.is_public}
-                      onChange={this.handleChange.bind(this)}
-                    />
-                  </LeftAlignContents>
-                  <ButtonGroup>
-                    <CustomButton type="submit" bgColor={'RoyalBlue'}>생성</CustomButton>
-                  </ButtonGroup>
-                </form>
-              </Paper>
-            </Grid>
+                </LeftAlignContents>
+                <ButtonGroup>
+                  <CustomButton type="submit" bgColor={'RoyalBlue'}>생성</CustomButton>
+                </ButtonGroup>
+              </form>
+            </Paper>
           </Grid>
-        </InnerContents>
-      </div>
-    );
+        </Grid>
+      </InnerContents>,
+    ];
   }
 }
 
