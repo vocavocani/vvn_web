@@ -141,12 +141,13 @@ class CreateGroup extends Component {
       rule: e.target.rule.value,
       tag: this.state.tags,
       is_public: this.state.is_public,
-      image: this.state.image
     };
 
-    console.log('group_data:', group_data);
+    const files = {
+      image: this.state.image,
+    };
 
-    api.post('/api/teams', group_data, true)
+    api.post('/api/teams', group_data, files, true)
       .then((data) => {
         console.log(data);
         this.props.history.push('/');
@@ -159,6 +160,7 @@ class CreateGroup extends Component {
   render() {
     let {image_preview_url} = this.state;
     let image_preview = null;
+
     if (image_preview_url) {
       image_preview = (<img src={image_preview_url}/>);
     } else {

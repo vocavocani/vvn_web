@@ -55,6 +55,45 @@ class API {
       });
     });
   }
+
+  post(url, data, files, is_auth) {
+    return new Promise((resolve, reject) => {
+      const request = superagent.post(`${this.base_url}${url}`);
+
+      if (is_auth) {
+        request.set('token', localStorage.getItem('token'));
+      }
+
+      if (data) {
+        const keys = Object.keys(data);
+
+        keys.forEach((key) => {
+          request.field(key, data[key]);
+        });
+      }
+
+      if (files) {
+        const keys = Object.keys(files);
+
+        keys.forEach((key) => {
+          request.attach(key, files[key]);
+        });
+      }
+
+      request.end((err, res) => {
+        if (err) {
+          if (res.status === 401) {
+            localStorage.removeItem('token');
+            return location.href = '/login';
+          }
+          console.error('ERROR Response:', res.body);
+          reject(res.body[0]);
+        } else {
+          resolve(res.body);
+        }
+      });
+    });
+  }
 }
 
 const api = new API();
