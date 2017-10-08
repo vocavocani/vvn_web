@@ -6,7 +6,7 @@ class API {
   }
 
   get(url, is_auth) {
-    return new Promise((reslove, reject) => {
+    return new Promise((resolve, reject) => {
       const request = superagent.get(`${this.base_url}${url}`);
 
       if (is_auth) {
@@ -20,17 +20,17 @@ class API {
             localStorage.removeItem('token');
             return location.href = '/login';
           }
-          console.log('ERROR Response:', res.body);
-          reject(res.body[0]);
+          console.error('ERROR Response:', res.body);
+          reject(res.body);
         } else {
-          reslove(res.body);
+          resolve(res.body);
         }
       });
     });
   }
 
   post(url, data, is_auth) {
-    return new Promise((reslove, reject) => {
+    return new Promise((resolve, reject) => {
       const request = superagent.post(`${this.base_url}${url}`);
 
       if (is_auth) {
@@ -38,7 +38,7 @@ class API {
       }
 
       if (data) {
-        request.send(data)
+        request.send(data);
       }
 
       request.end((err, res) => {
@@ -47,10 +47,49 @@ class API {
             localStorage.removeItem('token');
             return location.href = '/login';
           }
-          console.log('ERROR Response:', res.body);
+          console.error('ERROR Response:', res.body);
           reject(res.body[0]);
         } else {
-          reslove(res.body);
+          resolve(res.body);
+        }
+      });
+    });
+  }
+
+  post(url, data, files, is_auth) {
+    return new Promise((resolve, reject) => {
+      const request = superagent.post(`${this.base_url}${url}`);
+
+      if (is_auth) {
+        request.set('token', localStorage.getItem('token'));
+      }
+
+      if (data) {
+        const keys = Object.keys(data);
+
+        keys.forEach((key) => {
+          request.field(key, data[key]);
+        });
+      }
+
+      if (files) {
+        const keys = Object.keys(files);
+
+        keys.forEach((key) => {
+          request.attach(key, files[key]);
+        });
+      }
+
+      request.end((err, res) => {
+        if (err) {
+          if (res.status === 401) {
+            localStorage.removeItem('token');
+            return location.href = '/login';
+          }
+          console.error('ERROR Response:', res.body);
+          reject(res.body[0]);
+        } else {
+          resolve(res.body);
         }
       });
     });

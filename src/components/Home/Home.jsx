@@ -2,9 +2,10 @@ import React, {Component} from 'react';
 
 import {Grid} from 'material-ui';
 import styled from 'styled-components';
-import TopBar from '../TopBar/TopBar.jsx'
-import GroupBox from '../GroupBox/GroupBox.jsx'
-import CreateGroupBox from '../GroupBox/CreateGroupBox.jsx'
+
+import TopBar from '../TopBar/TopBar.jsx';
+import GroupBox from '../GroupBox/GroupBox.jsx';
+import CreateGroupBox from '../GroupBox/CreateGroupBox.jsx';
 
 import api from '../../actions/Api';
 
@@ -38,7 +39,6 @@ class Home extends Component {
   }
 
   render() {
-    // console.log(this.state.groups);
     return (
       <div>
         <TopBar history={this.props.history}/>
@@ -48,7 +48,7 @@ class Home extends Component {
             direction="row"
             align="flex-start"
             justify="flex-start"
-            spacing="40"
+            spacing={40}
           >
             {this.state.groups.map((group, i) => {
               return (
@@ -58,12 +58,12 @@ class Home extends Component {
                 />
               );
             })}
-            <CreateGroupBox/>
+            <CreateGroupBox history={this.props.history}/>
           </Grid>
         </InnerContents>
       </div>
     );
   }
-};
+}
 
 export default Home;

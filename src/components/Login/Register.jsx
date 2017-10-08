@@ -67,18 +67,17 @@ class Register extends Component {
     const register_data = {
       id: e.target.id.value,
       nickname: e.target.nickname.value,
-      pw_1: e.target.pw_1.value,
-      pw_2: e.target.pw_2.value
+      pw1: e.target.pw_1.value,
+      pw2: e.target.pw_2.value
     };
 
     api.post('/api/users/register', register_data, false)
       .then((data) => {
-        console.log(data);
         this.props.history.push('/login');
       })
       .catch((error) => {
         alert(error.message);
-      })
+      });
   }
 
   render() {
@@ -139,4 +138,5 @@ class Register extends Component {
     );
   }
 }
+
 export default Register;

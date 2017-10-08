@@ -19,9 +19,15 @@ const styles = {
   root: {
     width: '100%',
   },
+  royalBlue: {
+    backgroundColor: 'RoyalBlue',
+  },
   flex: {
     flex: 1,
-    color: 'white'
+    color: 'white',
+    '&:hover': {
+      cursor: 'pointer'
+    }
   },
   whiteColor: {
     color: 'white'
@@ -36,16 +42,24 @@ const TopBar = (props) => {
     props.history.push('/login');
   };
 
+  const goHome = () => {
+    props.history.push('/');
+  };
+
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="static" className={classes.royalBlue}>
         <InnerContents>
-        <Toolbar>
-          <Typography type="title" className={classes.flex}>VocaVocaNi</Typography>
-          <Button onClick={logout}
-                  className={classes.whiteColor}
-          >Logout</Button>
-        </Toolbar>
+          <Toolbar className={classes.royalBlue}>
+            <Typography type="title"
+                        onClick={goHome}
+                        className={classes.flex}>
+              VocaVocaNi
+            </Typography>
+            <Button onClick={logout}
+                    className={classes.whiteColor}
+            >Logout</Button>
+          </Toolbar>
         </InnerContents>
       </AppBar>
     </div>
