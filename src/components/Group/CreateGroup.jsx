@@ -147,7 +147,7 @@ class CreateGroup extends Component {
       image: this.state.image,
     };
 
-    api.post('/api/teams', group_data, files, true)
+    api.postWithFile('/api/teams', group_data, files, true)
       .then((data) => {
         console.log(data);
         this.props.history.push('/');
