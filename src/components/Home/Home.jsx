@@ -31,6 +31,11 @@ class Home extends Component {
   _getTeamList() {
     api.get('/api/teams', true)
       .then((data) => {
+        // 임시 테그
+        data.forEach((group) => {
+          group.tags = ["토익", "탭스", "수능"];
+        });
+
         this.setState({groups: data});
       })
       .catch((error) => {
