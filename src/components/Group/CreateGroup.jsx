@@ -57,6 +57,10 @@ const TagsWrapper = styled.div`
   padding-left: 10%;
 `;
 
+const PreviewImage = styled.img`
+  max-width: 95%;
+`;
+
 /**
  * Material-ui override
  */
@@ -135,6 +139,11 @@ class CreateGroup extends Component {
   createGroup(e) {
     e.preventDefault();
 
+    if (this.state.tags.length === 0) {
+      alert("Tag 를 입력해주세요.");
+      return;
+    }
+
     const group_data = {
       name: e.target.name.value,
       max_cap: e.target.max_cap.value,
@@ -149,7 +158,6 @@ class CreateGroup extends Component {
 
     api.postWithFile('/api/teams', group_data, files, true)
       .then((data) => {
-        console.log(data);
         this.props.history.push('/');
       })
       .catch((error) => {
@@ -162,7 +170,7 @@ class CreateGroup extends Component {
     let image_preview = null;
 
     if (image_preview_url) {
-      image_preview = (<img src={image_preview_url}/>);
+      image_preview = (<PreviewImage src={image_preview_url}/>);
     } else {
       image_preview = (<div className="previewText">대표 사진을 업로드 해주세요.</div>);
     }
