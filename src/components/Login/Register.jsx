@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TextField, Grid, Paper } from 'material-ui';
+import { TextField, Grid, Paper, Button } from 'material-ui';
 import styled from 'styled-components';
 import api from '../../actions/Api';
 
@@ -23,7 +23,7 @@ const ButtonGroup = styled.div`
   padding-bottom: 20px;
 `;
 
-const Button = styled.button`
+const CustomButton = styled.button`
   width: 90%;
   height: 40px;
   margin: 10px;
@@ -40,6 +40,10 @@ const Button = styled.button`
 	}
 `;
 
+const PreviewImage = styled.img`
+  max-width: 95%;
+`;
+
 /**
  * Material-ui override
  */
@@ -48,11 +52,19 @@ const textFieldStyle = {
   margin: '20px 0 0 0',
 };
 
+const hiddenInput = {
+  display: 'none'
+};
+
 class Register extends Component {
   constructor(props) {
     super(props);
 
     this._auth();
+    this.state = {
+      image: '',
+      image_preview_url: ''
+    };
   }
 
   _auth() {
@@ -61,7 +73,21 @@ class Register extends Component {
     }
   }
 
-  login(e) {
+  handleImageChange(e) {
+    let reader = new FileReader();
+    let image = e.target.files[0];
+
+    reader.onloadend = () => {
+      this.setState({
+        image: image,
+        image_preview_url: reader.result
+      });
+    };
+
+    reader.readAsDataURL(image)
+  }
+
+  register(e) {
     e.preventDefault();
 
     const register_data = {
@@ -71,7 +97,11 @@ class Register extends Component {
       pw2: e.target.pw_2.value
     };
 
-    api.post('/api/users/register', register_data, false)
+    const files = {
+      image: this.state.image,
+    };
+
+    api.postWithFile('/api/users/register', register_data, files, false)
       .then((data) => {
         this.props.history.push('/login');
       })
@@ -81,6 +111,15 @@ class Register extends Component {
   }
 
   render() {
+    let {image_preview_url} = this.state;
+    let image_preview = null;
+
+    if (image_preview_url) {
+      image_preview = (<PreviewImage src={image_preview_url}/>);
+    } else {
+      image_preview = (<div className="previewText">프로필 이미지를 추가해주세요.</div>);
+    }
+
     return (
       <Container>
         <Grid
@@ -92,7 +131,23 @@ class Register extends Component {
           <Grid item xs={10} sm={4}>
             <Paper>
               <h1>VocaVocaNi</h1>
-              <form onSubmit={this.login.bind(this)}>
+              <div>
+                {image_preview}
+              </div>
+              <form onSubmit={this.register.bind(this)}>
+                <input accept="jpg,jpeg,JPG,JPEG"
+                       id="image"
+                       type="file"
+                       onChange={this.handleImageChange.bind(this)}
+                       style={hiddenInput}
+                />
+                <div>
+                  <label htmlFor="image">
+                    <Button raised dense component="span">
+                      프사 추가
+                    </Button>
+                  </label>
+                </div>
                 <TextField
                   required
                   id="id"
@@ -124,11 +179,11 @@ class Register extends Component {
                   style={textFieldStyle}
                 /><br />
                 <ButtonGroup>
-                  <Button type="submit" bgColor={'RoyalBlue'}>회원가입</Button>
-                  <Button type="button" bgColor={'grey'}
+                  <CustomButton type="submit" bgColor={'RoyalBlue'}>회원가입</CustomButton>
+                  <CustomButton type="button" bgColor={'grey'}
                     onClick={() => { this.props.history.push('/login'); }}>
                     로그인 화면
-                  </Button>
+                  </CustomButton>
                 </ButtonGroup>
               </form>
             </Paper>
