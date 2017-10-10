@@ -56,7 +56,7 @@ class API {
     });
   }
 
-  post(url, data, files, is_auth) {
+  postWithFile(url, data, files, is_auth) {
     return new Promise((resolve, reject) => {
       const request = superagent.post(`${this.base_url}${url}`);
 

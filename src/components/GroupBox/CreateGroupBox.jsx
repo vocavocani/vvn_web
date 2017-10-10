@@ -9,9 +9,9 @@ import Grid from 'material-ui/Grid';
  */
 const styles = {
   card: {
+    height: 250,
     minWidth: 150,
     minHeight: 150,
-    maxHeight: 250,
 
     '&:hover': {
       cursor: 'pointer',

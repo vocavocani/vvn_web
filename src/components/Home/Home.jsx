@@ -31,6 +31,11 @@ class Home extends Component {
   _getTeamList() {
     api.get('/api/teams', true)
       .then((data) => {
+        // 임시 테그
+        data.forEach((group) => {
+          group.tags = ["토익", "탭스", "수능"];
+        });
+
         this.setState({groups: data});
       })
       .catch((error) => {
@@ -39,30 +44,28 @@ class Home extends Component {
   }
 
   render() {
-    return (
-      <div>
-        <TopBar history={this.props.history}/>
-        <InnerContents>
-          <Grid
-            container
-            direction="row"
-            align="flex-start"
-            justify="flex-start"
-            spacing={40}
-          >
-            {this.state.groups.map((group, i) => {
-              return (
-                <GroupBox
-                  group={group}
-                  key={i}
-                />
-              );
-            })}
-            <CreateGroupBox history={this.props.history}/>
-          </Grid>
-        </InnerContents>
-      </div>
-    );
+    return [
+      <TopBar history={this.props.history}/>,
+      <InnerContents>
+        <Grid
+          container
+          direction="row"
+          align="flex-start"
+          justify="flex-start"
+          spacing={40}
+        >
+          {this.state.groups.map((group, i) => {
+            return (
+              <GroupBox
+                group={group}
+                key={i}
+              />
+            );
+          })}
+          <CreateGroupBox history={this.props.history}/>
+        </Grid>
+      </InnerContents>
+    ];
   }
 }
 
